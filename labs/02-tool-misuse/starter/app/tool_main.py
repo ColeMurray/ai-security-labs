@@ -139,7 +139,13 @@ async def agent(req: Req = Body(...)):
     
     # Handle tool calls
     actions_log = []
+    MAX_ITERATIONS = 10  # Safeguard to prevent infinite loops
+    iteration_count = 0
     while resp.choices and resp.choices[0].message.tool_calls:
+        if iteration_count >= MAX_ITERATIONS:
+            logging.error("Maximum iteration limit reached. Possible infinite loop detected.")
+            break
+        iteration_count += 1
         msg = resp.choices[0].message
         
         # Add the assistant message to conversation
