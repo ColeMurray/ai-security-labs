@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+openai
+pydantic>=2
+httpx
+pytest
+pytest-asyncio 
